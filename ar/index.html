@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animura — Obras AR</title>
+  <meta name="description" content="Escanea los murales de BTAJ MX y cobran vida. Realidad aumentada en Pachuca, Hidalgo.">
+  <meta property="og:title" content="Animura — Murales con vida">
+  <meta property="og:description" content="Apunta tu cámara a los murales de BTAJ MX y mira la animación aparecer.">
+  <meta property="og:image" content="/assets/brand/og-gallery.jpg">
+  <!-- FAVICON: reemplaza con tu favicon -->
+  <!-- <link rel="icon" href="/assets/brand/favicon.svg" type="image/svg+xml"> -->
+  <link rel="stylesheet" href="/assets/css/btaj.css">
+  <style>
+    body.gallery-page { overflow-y: auto; min-height: 100vh; }
+  </style>
+</head>
+<body class="gallery-page">
+
+  <header class="gallery-header">
+    <!-- LOGO: reemplaza el SVG placeholder con tu logo -->
+    <svg width="36" height="36" viewBox="0 0 36 36" aria-label="BTAJ MX logo">
+      <rect width="36" height="36" fill="#3A2925"/>
+      <text x="18" y="25" text-anchor="middle" fill="#F5F1E8"
+            font-family="Arial Black, sans-serif" font-size="13" font-weight="900">
+        BT
+      </text>
+    </svg>
+    <div>
+      <h1>Animura</h1>
+      <p style="font-size:.72rem;opacity:.5;letter-spacing:.1em;text-transform:uppercase">
+        by BTAJ
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <div id="gallery-grid" class="gallery-grid" role="list">
+      <!-- Cards se insertan por gallery.js -->
+      <div style="padding:40px;opacity:.4;font-size:.85rem">Cargando obras…</div>
+    </div>
+  </main>
+
+  <script type="module" src="/assets/js/gallery.js"></script>
+</body>
+</html>

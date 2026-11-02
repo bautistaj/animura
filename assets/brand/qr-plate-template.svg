@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="520" viewBox="0 0 400 520">
+  <!-- Fondo crema -->
+  <rect width="400" height="520" fill="#F5F1E8"/>
+
+  <!-- Barra superior oscura -->
+  <rect x="0" y="0" width="400" height="88" fill="#3A2925"/>
+  <text x="200" y="28" text-anchor="middle" fill="#F5F1E8"
+        font-family="Arial Black, sans-serif" font-size="11" letter-spacing="4" font-weight="900">
+    BTAJ MX
+  </text>
+  <!-- Título de la obra (reemplazar en el script) -->
+  <text x="200" y="64" text-anchor="middle" fill="#F5F1E8"
+        font-family="Arial Black, sans-serif" font-size="24" font-weight="900" letter-spacing="1">
+    TÍTULO DE LA OBRA
+  </text>
+
+  <!-- Área del QR (100×100 → 300×300 en coords SVG) -->
+  <rect x="80" y="108" width="240" height="240" fill="#151515"/>
+  <text x="200" y="234" text-anchor="middle" fill="#F5F1E8"
+        font-family="Arial, sans-serif" font-size="12" opacity="0.6">
+    [Genera con: node scripts/generate-qr-plate.mjs slug]
+  </text>
+
+  <!-- Instrucción -->
+  <text x="200" y="378" text-anchor="middle" fill="#3A2925"
+        font-family="Arial, sans-serif" font-size="12" letter-spacing="2">
+    ESCANEA PARA VER LA ANIMACIÓN AR
+  </text>
+
+  <!-- URL placeholder -->
+  <text x="200" y="402" text-anchor="middle" fill="#3A2925"
+        font-family="Arial, sans-serif" font-size="10" opacity="0.5">
+    bautistaj.dev/ar/slug/
+  </text>
+
+  <!-- Línea decorativa -->
+  <line x1="40" y1="420" x2="360" y2="420" stroke="#3A2925" stroke-width="1" opacity="0.2"/>
+
+  <!-- Año -->
+  <text x="200" y="444" text-anchor="middle" fill="#3A2925"
+        font-family="Arial, sans-serif" font-size="10" opacity="0.4">
+    2024
+  </text>
+
+  <!-- Barra de color de categoría (accent) -->
+  <rect x="0" y="500" width="400" height="20" fill="#178F82"/>
+</svg>

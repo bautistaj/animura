@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#151515">
+  <title>Animura</title>
+  <link rel="manifest" href="/assets/brand/manifest.json">
+  <!-- OG tags se setean dinámicamente en JS -->
+  <link rel="stylesheet" href="/assets/css/btaj.css">
+
+  <!-- A-Frame y MindAR — servidos localmente, versiones fijas -->
+  <script src="/assets/lib/aframe.min.js"></script>
+  <script src="/assets/lib/mindar-image-aframe.prod.js"></script>
+
+  <!-- Shader de transparencia universal (stacked-alpha) — v4 -->
+  <script src="/assets/js/shaders/stacked-alpha.js?v=5"></script>
+</head>
+<body>
+
+  <!-- ── SPLASH ──────────────────────────────────────────── -->
+  <div id="screen-splash" class="screen" role="main">
+    <div class="splash-topbar">
+      <p class="subtitle">Animura <span style="opacity:.45;font-size:.8em">by BTAJ</span></p>
+      <button id="btn-lang" class="btn-lang" aria-label="Cambiar idioma">EN</button>
+    </div>
+
+    <div class="logo-wrap" aria-hidden="true">
+      <svg width="80" height="80" viewBox="0 0 80 80">
+        <rect width="80" height="80" fill="#3A2925"/>
+        <text x="40" y="52" text-anchor="middle" fill="#F5F1E8"
+              font-family="Arial Black,sans-serif" font-size="28" font-weight="900">BT</text>
+      </svg>
+    </div>
+
+    <h1 id="splash-title">—</h1>
+    <p class="year" id="splash-year"></p>
+    <span class="category-tag" id="splash-category" style="display:none"></span>
+    <p id="splash-desc" style="font-size:.82rem;opacity:.6;max-width:280px;line-height:1.5;margin-bottom:20px"></p>
+
+    <!-- Preview del mural a escanear -->
+    <div style="margin-bottom:28px;text-align:center">
+      <p id="label-point" style="font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;opacity:.5;margin-bottom:8px">
+        Apunta al mural
+      </p>
+      <div style="position:relative;display:inline-block">
+        <img id="splash-poster" src="" alt="Imagen del mural a escanear"
+          style="width:120px;height:120px;object-fit:cover;border:3px solid var(--cream);display:block;">
+        <span style="position:absolute;top:-4px;left:-4px;width:14px;height:14px;
+                     border-top:3px solid var(--accent);border-left:3px solid var(--accent)"></span>
+        <span style="position:absolute;top:-4px;right:-4px;width:14px;height:14px;
+                     border-top:3px solid var(--accent);border-right:3px solid var(--accent)"></span>
+        <span style="position:absolute;bottom:-4px;left:-4px;width:14px;height:14px;
+                     border-bottom:3px solid var(--accent);border-left:3px solid var(--accent)"></span>
+        <span style="position:absolute;bottom:-4px;right:-4px;width:14px;height:14px;
+                     border-bottom:3px solid var(--accent);border-right:3px solid var(--accent)"></span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-full" id="btn-start" aria-label="Iniciar experiencia AR">
+      Iniciar experiencia
+    </button>
+    <p class="privacy-note" id="privacy-note">
+      Esta app usa la cámara solo para AR. No se graba ni almacena video.
+    </p>
+    <a href="/ar/" class="btn btn-sm" id="btn-all-artworks" style="margin-top:10px">← Ver todas las obras</a>
+  </div>
+
+  <!-- ── CARGANDO ─────────────────────────────────────────── -->
+  <div id="screen-loading" class="screen gone">
+    <div class="loader-eyes" aria-hidden="true">
+      <svg width="72" height="72" viewBox="0 0 72 72">
+        <rect width="72" height="72" fill="#3A2925"/>
+        <rect class="eye" x="16" y="24" width="12" height="16" rx="2" fill="#F5F1E8"/>
+        <rect class="eye" x="44" y="24" width="12" height="16" rx="2" fill="#F5F1E8"/>
+        <rect x="22" y="48" width="28" height="5" rx="2" fill="#F5F1E8"/>
+      </svg>
+    </div>
+    <p id="loading-text" style="font-size:.85rem;opacity:.6;letter-spacing:.06em;margin-top:16px">
+      Iniciando cámara…
+    </p>
+  </div>
+
+  <!-- ── ESCANEO ─────────────────────────────────────────── -->
+  <div id="screen-scan" class="screen gone" aria-live="polite">
+    <div class="scan-frame" aria-hidden="true"><span></span></div>
+    <div class="scan-hint">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+           viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span id="scan-text">Apunta al mural o ilustración</span>
+    </div>
+  </div>
+
+  <!-- ── MOMENTO FIRMA ───────────────────────────────────── -->
+  <div id="flash-overlay" aria-hidden="true"></div>
+  <p id="found-msg" aria-live="assertive">¡La encontraste!</p>
+
+  <!-- ── PANEL CTA ───────────────────────────────────────── -->
+  <div id="screen-cta" class="screen gone" aria-label="Opciones">
+    <button class="cta-close" id="btn-cta-close" aria-label="Cerrar">✕</button>
+    <div class="cta-bar">
+      <p id="cta-title" class="cta-artwork-title"></p>
+      <div id="cta-meta" class="cta-meta" style="display:none">
+        <span id="cta-year-row"></span>
+        <span id="cta-location-row"></span>
+        <span id="cta-technique-row"></span>
+      </div>
+      <p id="cta-story" class="cta-story" style="display:none"></p>
+      <a id="btn-instagram" href="#" target="_blank" rel="noopener"
+         class="btn btn-accent">Instagram @btaj_mx</a>
+      <a id="btn-commissions" href="#" target="_blank" rel="noopener"
+         class="btn" style="display:none">Encargos</a>
+      <a href="/ar/" class="btn" id="btn-gallery-cta">← Ver galería</a>
+      <button id="btn-share" class="btn">Compartir</button>
+    </div>
+  </div>
+
+  <!-- ── ERROR ───────────────────────────────────────────── -->
+  <div id="screen-error" class="screen gone" role="alert">
+    <h2 id="error-title">Algo salió mal</h2>
+    <p id="error-msg"></p>
+    <a href="/ar/" class="btn btn-sm" style="margin-top:8px">← Galería</a>
+  </div>
+
+  <!-- ── FALLBACK (desktop / sin cámara) ────────────────── -->
+  <div id="screen-fallback" class="screen gone">
+    <p class="subtitle" style="margin-bottom:8px">Animura</p>
+    <h2 id="fallback-title" style="font-family:var(--font-display);font-size:1.2rem;
+                                   text-transform:uppercase;margin-bottom:16px"></h2>
+    <video id="fallback-video" controls loop muted playsinline
+           style="max-width:min(90vw,380px);border:3px solid #F5F1E8"></video>
+    <p id="fallback-msg" style="font-size:.8rem;opacity:.6;margin-top:16px;margin-bottom:8px">
+      Escanea con tu celular para la experiencia AR:
+    </p>
+    <div id="fallback-qr"></div>
+    <a href="/ar/" class="btn btn-sm" style="margin-top:20px">← Galería</a>
+  </div>
+
+  <!-- ── Controles AR flotantes ──────────────────────────── -->
+  <div id="ar-controls" class="ar-controls">
+    <button id="btn-capture" class="ar-btn" aria-label="Capturar foto">◎ Capturar</button>
+    <button id="btn-show-cta" class="ar-btn" aria-label="Ver opciones">Opciones ↑</button>
+  </div>
+
+  <script type="module">
+    import { ARController, checkSupport } from '/assets/js/ar-controller.js?v=5';
+    import { track } from '/assets/js/analytics.js?v=5';
+    import { captureAR } from '/assets/js/photo-capture.js?v=5';
+    import { t, getLang, toggleLang } from '/assets/js/i18n.js?v=5';
+
+    /* ── Helpers ───────────────────────────────────────── */
+    const $ = id => document.getElementById(id);
+    const show = id => $(id).classList.remove('gone', 'hidden');
+    const hide = id => $(id).classList.add('gone');
+
+    /* ── Slug desde pathname: /ar/{slug}/ ─────────────── */
+    const parts = location.pathname.replace(/\/$/, '').split('/');
+    const slug  = parts[parts.length - 1];
+
+    /* ── i18n: aplicar strings al chrome de UI ────────── */
+    function applyI18n() {
+      $('btn-start').textContent      = t('start');
+      $('loading-text').textContent   = t('loading');
+      $('scan-text').textContent      = t('scanning');
+      $('found-msg').textContent      = t('found');
+      $('label-point').textContent    = t('pointAt');
+      $('privacy-note').textContent   = t('privacy');
+      $('btn-all-artworks').textContent = t('allArtworks');
+      $('btn-capture').textContent    = t('capture');
+      $('btn-show-cta').textContent   = t('options');
+      $('btn-instagram').textContent  = t('instagram');
+      $('btn-commissions').textContent = t('commissions');
+      $('btn-gallery-cta').textContent = t('gallery');
+      $('btn-share').textContent      = t('share');
+      $('fallback-msg').textContent   = t('fallbackMsg');
+      $('error-title').textContent    = t('errorTitle');
+      $('btn-lang').textContent       = t('langToggle');
+      document.documentElement.lang  = getLang();
+    }
+    applyI18n();
+
+    $('btn-lang').addEventListener('click', () => {
+      toggleLang();
+      applyI18n();
+    });
+
+    // IIFE para poder usar return como control de flujo (top-level return no válido en módulos)
+    await (async () => {
+
+    /* ── Cargar artwork desde JSON ────────────────────── */
+    let artwork;
+    try {
+      const res = await fetch('/artworks.json');
+      const { artworks } = await res.json();
+      artwork = artworks.find(a => a.slug === slug);
+    } catch (_) {}
+
+    if (!artwork) {
+      show('screen-error');
+      hide('screen-splash');
+      $('error-msg').textContent = t('errorNotFound');
+      throw new Error('Artwork not found: ' + slug);
+    }
+
+    /* ── OG tags dinámicos ────────────────────────────── */
+    document.title = `${artwork.title} — Animura`;
+    const setMeta = (prop, val) => {
+      let el = document.querySelector(`meta[property="${prop}"]`);
+      if (!el) { el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
+      el.setAttribute('content', val);
+    };
+    setMeta('og:title',       `${artwork.title} — Animura`);
+    setMeta('og:description', artwork.description);
+    if (artwork.poster) setMeta('og:image', artwork.poster);
+
+    /* ── Acento de la obra ────────────────────────────── */
+    document.documentElement.style.setProperty('--accent', artwork.accent);
+
+    /* ── Poblar splash ────────────────────────────────── */
+    $('splash-title').textContent = artwork.title;
+    $('splash-year').textContent  = artwork.year;
+    $('splash-desc').textContent  = artwork.description;
+    $('splash-poster').src        = artwork.poster;
+    const catEl = $('splash-category');
+    catEl.textContent       = artwork.category;
+    catEl.style.display     = 'inline-block';
+    catEl.style.borderColor = artwork.accent;
+    catEl.style.color       = artwork.accent;
+
+    /* ── Detectar soporte AR ──────────────────────────── */
+    const support = checkSupport();
+
+    /* ── FALLBACK: solo sin cámara o sin HTTPS ────────── */
+    if (!support.ok) {
+      $('btn-start').textContent = support.reason || t('start');
+      $('btn-start').addEventListener('click', () => {
+        hide('screen-splash');
+        show('screen-fallback');
+        $('fallback-title').textContent = artwork.title;
+        const fv = $('fallback-video');
+        fv.src = artwork.videos.stackedMp4;
+        fv.play().catch(() => {});
+
+        import('https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js')
+          .then(async () => {
+            const url    = `https://bautistaj.dev/ar/${slug}/`;
+            const canvas = document.createElement('canvas');
+            $('fallback-qr').appendChild(canvas);
+            QRCode.toCanvas(canvas, url, { width: 160, margin: 2 });
+          }).catch(() => {});
+      }, { once: true });
+      return;
+    }
+
+    /* ── FLUJO AR NORMAL ──────────────────────────────── */
+    const controller  = new ARController(artwork);
+    const arControls  = $('ar-controls');
+
+    $('btn-start').addEventListener('click', () => {
+      hide('screen-splash');
+      show('screen-loading');
+
+      // Mount aquí: iOS requiere gesto del usuario para pedir permiso de cámara
+      controller.mount();
+      controller.unlockAudio(); // desbloquea audio iOS dentro del gesto del usuario
+      controller.start({
+        onReady() {
+          hide('screen-loading');
+          show('screen-scan');
+          arControls.style.display = 'flex';
+        },
+        onTargetFound() {
+          hide('screen-scan');
+          showFoundMessage();
+        },
+        onTargetLost() {
+          show('screen-scan');
+          $('scan-text').textContent = t('scanningAgain');
+        },
+        onError(reason) {
+          hide('screen-loading');
+          hide('screen-scan');
+          show('screen-error');
+          $('error-msg').textContent = reason;
+        }
+      });
+    }, { once: true });
+
+    /* ── Momento firma ────────────────────────────────── */
+    function showFoundMessage() {
+      const flash = $('flash-overlay');
+      const msg   = $('found-msg');
+      msg.textContent = t('found');
+      flash.classList.add('active');
+      msg.classList.add('visible');
+      setTimeout(() => {
+        flash.classList.remove('active');
+        msg.classList.remove('visible');
+      }, 1500);
+    }
+
+    /* ── Captura de foto ──────────────────────────────── */
+    $('btn-capture').addEventListener('click', async () => {
+      try {
+        await captureAR(artwork.title);
+        track('cta_click', { slug, action: 'capture' });
+      } catch (e) {
+        console.warn('Capture failed:', e);
+      }
+    });
+
+    /* ── Panel CTA ────────────────────────────────────── */
+    $('btn-show-cta').addEventListener('click', () => {
+      $('cta-title').textContent = artwork.title;
+
+      // Metadata
+      const metaEl = $('cta-meta');
+      $('cta-year-row').textContent      = artwork.year      ? String(artwork.year)          : '';
+      $('cta-location-row').textContent  = artwork.location  ? `📍 ${artwork.location}`      : '';
+      $('cta-technique-row').textContent = artwork.technique ? artwork.technique             : '';
+      if (artwork.year || artwork.location || artwork.technique) {
+        metaEl.style.display = 'flex';
+      }
+
+      // Historia
+      const storyEl = $('cta-story');
+      if (artwork.story) {
+        storyEl.textContent   = artwork.story;
+        storyEl.style.display = '';
+      }
+
+      // Instagram
+      const ig = $('btn-instagram');
+      ig.href = artwork.cta?.instagram || 'https://instagram.com/btaj_mx';
+      ig.onclick = () => {
+        track('cta_click', { slug, action: 'instagram' });
+        setTimeout(() => hide('screen-cta'), 300);
+      };
+
+      // Encargos
+      const comm = $('btn-commissions');
+      if (artwork.cta?.commissions) {
+        comm.href = artwork.cta.commissions;
+        comm.style.display = '';
+        comm.onclick = () => track('cta_click', { slug, action: 'commissions' });
+      }
+
+      show('screen-cta');
+    });
+
+    $('btn-cta-close').addEventListener('click', () => hide('screen-cta'));
+
+    $('btn-share').addEventListener('click', () => {
+      track('cta_click', { slug, action: 'share' });
+      const url = `https://bautistaj.dev/ar/${slug}/`;
+      if (navigator.share) {
+        navigator.share({ title: `${artwork.title} — Animura`, url });
+      } else {
+        navigator.clipboard?.writeText(url);
+        $('btn-share').textContent = t('linkCopied');
+      }
+    });
+
+    })(); // fin IIFE
+  </script>
+
+</body>
+</html>

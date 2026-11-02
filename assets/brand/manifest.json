@@ -1,0 +1,14 @@
+{
+  "name": "Animura",
+  "short_name": "Animura",
+  "description": "Apunta tu cámara a los murales de BTAJ MX y mira la animación aparecer.",
+  "start_url": "/ar/",
+  "display": "standalone",
+  "background_color": "#151515",
+  "theme_color": "#151515",
+  "lang": "es",
+  "icons": [
+    { "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

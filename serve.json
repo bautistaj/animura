@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/ar/:slug/", "destination": "/ar/viewer.html" },
+    { "source": "/ar/:slug",  "destination": "/ar/viewer.html" }
+  ]
+}

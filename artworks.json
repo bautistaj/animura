@@ -1,0 +1,115 @@
+{
+  "artworks": [
+    {
+      "slug": "btaj-capas",
+      "title": "Capas",
+      "year": 2024,
+      "description": "Ilustración original BTAJ MX — capas de identidad y proceso.",
+      "story": "Exploración de las capas que conforman la identidad: el trazo, el color, el territorio y el tiempo.",
+      "technique": "Ilustración digital",
+      "location": "Estudio BTAJ MX, Pachuca, Hgo.",
+      "category": "Identidad",
+      "accent": "#178F82",
+      "target": "/assets/artworks/btaj-capas/target.mind",
+      "targetIndex": 0,
+      "poster": "/assets/artworks/btaj-capas/poster.jpg",
+      "aspectRatio": 1.0,
+      "transparent": true,
+      "muted": false,
+      "videos": {
+        "stackedMp4": "/assets/artworks/btaj-capas/video-stacked.mp4",
+        "webm": null,
+        "hevc": null
+      },
+      "animation": {
+        "from": "0 0 0.01",
+        "to": "0 0 0.08",
+        "duration": 2000,
+        "easing": "easeInOutSine"
+      },
+      "tracking": {
+        "filterMinCF": 0.001,
+        "filterBeta": 0.001
+      },
+      "cta": {
+        "instagram": "https://instagram.com/btaj_mx",
+        "commissions": "https://bautistaj.dev/contacto",
+        "label": "Ver más en Instagram"
+      }
+    },
+    {
+      "slug": "la-ofrenda-que-regresa",
+      "title": "La Ofrenda que Regresa",
+      "year": 2024,
+      "description": "Mural de Día de Muertos: calaveras, maguey, velas y cempasúchil en noche pachuca.",
+      "story": "La ofrenda que regresa cada noviembre — flores, fuego y pulque para los que ya no están. Mural en Pachuca, Hidalgo.",
+      "technique": "Acrílico sobre barda",
+      "location": "Pachuca, Hidalgo",
+      "category": "Identidad",
+      "accent": "#E87820",
+      "target": "/assets/artworks/la-ofrenda-que-regresa/target.mind",
+      "targetIndex": 0,
+      "poster": "/assets/artworks/la-ofrenda-que-regresa/poster.jpg",
+      "aspectRatio": 0.734,
+      "transparent": false,
+      "muted": false,
+      "videos": {
+        "stackedMp4": "/assets/artworks/la-ofrenda-que-regresa/video-stacked.mp4",
+        "webm": null,
+        "hevc": null
+      },
+      "animation": {
+        "from": "0 0 0.01",
+        "to": "0 0 0.08",
+        "duration": 2000,
+        "easing": "easeInOutSine"
+      },
+      "tracking": {
+        "filterMinCF": 0.001,
+        "filterBeta": 0.001
+      },
+      "cta": {
+        "instagram": "https://instagram.com/btaj_mx",
+        "commissions": "https://bautistaj.dev/contacto",
+        "label": "Ver más en Instagram"
+      }
+    },
+    {
+      "slug": "abismo-negro",
+      "title": "Abismo Negro",
+      "year": 2024,
+      "description": "El vacío como espacio de creación. Mural en Pachuca, Hidalgo.",
+      "story": "El vacío como espacio de creación — donde nada existe, todo es posible. Barda intervenida en el centro de Pachuca.",
+      "technique": "Acrílico sobre barda",
+      "location": "Pachuca, Hidalgo",
+      "category": "Combate",
+      "accent": "#D92B20",
+      "target": "/assets/artworks/btaj-capas/target.mind",
+      "targetIndex": 0,
+      "poster": "/assets/artworks/abismo-negro/poster.jpg",
+      "aspectRatio": 1.0,
+      "transparent": true,
+      "muted": false,
+      "videos": {
+        "stackedMp4": "/assets/artworks/abismo-negro/video-stacked.mp4",
+        "webm": null,
+        "hevc": null
+      },
+      "animation": {
+        "from": "0 0 0.01",
+        "to": "0 0 0.08",
+        "duration": 2000,
+        "easing": "easeInOutSine"
+      },
+      "tracking": {
+        "filterMinCF": 0.001,
+        "filterBeta": 0.001
+      },
+      "cta": {
+        "instagram": "https://instagram.com/btaj_mx",
+        "commissions": "https://bautistaj.dev/contacto",
+        "label": "Ver más en Instagram"
+      }
+    }
+  ]
+}

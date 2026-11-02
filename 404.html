@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#151515">
+  <title>404 — Animura</title>
+  <link rel="stylesheet" href="/assets/css/btaj.css">
+  <style>
+    body { overflow: auto; }
+    .page-404 {
+      min-height: 100dvh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 32px 24px; text-align: center; gap: 16px;
+    }
+    .code-404 {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 20vw, 9rem);
+      line-height: 1;
+      letter-spacing: -.02em;
+      color: var(--cream);
+      opacity: .12;
+      position: absolute;
+      pointer-events: none;
+    }
+    .content-404 {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 16px;
+    }
+    .logo-wrap-sm {
+      margin-bottom: 8px;
+    }
+    .msg-404 {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 4vw, 1.4rem);
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+    .sub-404 {
+      font-size: .82rem; opacity: .55; max-width: 260px; line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-404">
+    <span class="code-404" aria-hidden="true">404</span>
+    <div class="content-404">
+      <div class="logo-wrap-sm" aria-hidden="true">
+        <svg width="64" height="64" viewBox="0 0 80 80">
+          <rect width="80" height="80" fill="#3A2925"/>
+          <text x="40" y="52" text-anchor="middle" fill="#F5F1E8"
+                font-family="Arial Black,sans-serif" font-size="28" font-weight="900">BT</text>
+        </svg>
+      </div>
+      <p class="subtitle">Animura</p>
+      <h1 class="msg-404">Página no encontrada</h1>
+      <p class="sub-404">El enlace que seguiste no existe o fue movido. Revisa el QR o ve a la galería.</p>
+      <a href="/ar/" class="btn btn-primary" style="margin-top:8px">← Ver galería</a>
+    </div>
+  </div>
+</body>
+</html>
