@@ -16,17 +16,17 @@
 #   git pull && sudo docker compose up -d --build
 #
 # Agregar obra nueva sin reconstruir imagen:
-#   rsync -av assets/artworks/mi-obra/ usuario@host:/ruta/btaj-ar/assets/artworks/mi-obra/
-#   scp artworks.json usuario@host:/ruta/btaj-ar/artworks.json
-#   sudo docker compose restart btaj-ar
+#   rsync -av assets/artworks/mi-obra/ usuario@host:/opt/animura/assets/artworks/mi-obra/
+#   scp artworks.json usuario@host:/opt/animura/artworks.json
+#   sudo docker compose restart animura
 
 services:
-  btaj-ar:
+  animura:
     build:
       context: .
       dockerfile: Dockerfile
-    image: btaj-ar:latest
-    container_name: btaj-ar
+    image: animura:latest
+    container_name: animura
     restart: unless-stopped
     volumes:
       # Bind-mount de obras: permite agregar artwork nuevo con rsync
@@ -37,10 +37,10 @@ services:
       - "traefik.enable=true"
       # Las tres rutas que este servicio necesita — sin StripPrefix
       # porque el código usa rutas absolutas desde la raíz del dominio.
-      - "traefik.http.routers.btaj-ar.rule=Host(`bautistaj.dev`) && (PathPrefix(`/ar`) || PathPrefix(`/assets`) || Path(`/artworks.json`))"
-      - "traefik.http.routers.btaj-ar.entrypoints=websecure"
-      - "traefik.http.routers.btaj-ar.tls.certresolver=letsencrypt"
-      - "traefik.http.services.btaj-ar.loadbalancer.server.port=3000"
+      - "traefik.http.routers.animura.rule=Host(`bautistaj.dev`) && (PathPrefix(`/ar`) || PathPrefix(`/assets`) || Path(`/artworks.json`))"
+      - "traefik.http.routers.animura.entrypoints=websecure"
+      - "traefik.http.routers.animura.tls.certresolver=letsencrypt"
+      - "traefik.http.services.animura.loadbalancer.server.port=3000"
     networks:
       - traefik-public
 

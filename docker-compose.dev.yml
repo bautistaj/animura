@@ -4,12 +4,11 @@
 #
 # URLs:
 #   http://localhost:3000/ar/
-#   http://localhost:3000/ar/btaj-capas/
-#   http://localhost:3000/ar/abismo-negro/
+#   http://localhost:3000/ar/la-ofrenda-que-regresa/
 #   http://localhost:3000/artworks.json
 
 services:
-  btaj-ar:
+  animura:
     ports:
       - "3000:3000"
     networks:
