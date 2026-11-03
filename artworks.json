@@ -1,6 +1,43 @@
 {
   "artworks": [
     {
+      "slug": "el-viento-dulce-de-apan",
+      "title": "El Viento Dulce de Apan",
+      "year": 2025,
+      "description": "Mural en Apan, Hidalgo.",
+      "story": "El viento dulce de Apan — obra de @lacalledelcafe1205.",
+      "technique": "Mural",
+      "location": "Apan, Hidalgo",
+      "category": "Identidad",
+      "accent": "#5B8DB8",
+      "target": "/assets/artworks/el-viento-dulce-de-apan/target.mind",
+      "targetIndex": 0,
+      "poster": "/assets/artworks/el-viento-dulce-de-apan/poster.jpg",
+      "aspectRatio": 0.448,
+      "transparent": true,
+      "muted": true,
+      "videos": {
+        "stackedMp4": "/assets/artworks/el-viento-dulce-de-apan/video-stacked.mp4",
+        "webm": null,
+        "hevc": null
+      },
+      "animation": {
+        "from": "0 0 0.01",
+        "to": "0 0 0.08",
+        "duration": 2000,
+        "easing": "easeInOutSine"
+      },
+      "tracking": {
+        "filterMinCF": 0.001,
+        "filterBeta": 0.001
+      },
+      "cta": {
+        "instagram": "https://instagram.com/lacalledelcafe1205",
+        "commissions": "https://bautistaj.dev/contacto",
+        "label": "Ver más en Instagram"
+      }
+    },
+    {
       "slug": "la-ofrenda-que-regresa",
       "title": "La Ofrenda que Regresa",
       "year": 2024,
