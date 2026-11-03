@@ -180,7 +180,12 @@ export class ARController {
     });
 
     scene.addEventListener('arError', (e) => {
-      const reason = e.detail?.error || 'Error desconocido';
+      const d = e.detail;
+      const reason = d?.error
+        || d?.message
+        || (typeof d === 'string' ? d : null)
+        || (d ? String(d) : null)
+        || 'Error al iniciar la cámara';
       track('ar_error', { slug: this.artwork.slug, reason });
       onError?.(reason);
     });

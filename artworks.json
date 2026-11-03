@@ -13,8 +13,8 @@
       "target": "/assets/artworks/el-viento-dulce-de-apan/target.mind",
       "targetIndex": 0,
       "poster": "/assets/artworks/el-viento-dulce-de-apan/poster.jpg",
-      "aspectRatio": 0.448,
-      "transparent": true,
+      "aspectRatio": 0.896,
+      "transparent": false,
       "muted": true,
       "videos": {
         "stackedMp4": "/assets/artworks/el-viento-dulce-de-apan/video-stacked.mp4",

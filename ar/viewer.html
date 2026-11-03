@@ -122,8 +122,15 @@
   <!-- ── ERROR ───────────────────────────────────────────── -->
   <div id="screen-error" class="screen gone" role="alert">
     <h2 id="error-title">Algo salió mal</h2>
-    <p id="error-msg"></p>
-    <a href="/ar/" class="btn btn-sm" style="margin-top:8px">← Galería</a>
+    <p id="error-msg" style="font-size:.8rem;opacity:.7;max-width:280px;line-height:1.5"></p>
+    <ul id="error-hints" style="font-size:.75rem;opacity:.55;text-align:left;max-width:280px;
+                                 line-height:1.7;padding-left:1.2em;margin:12px 0">
+      <li>Verifica que diste permiso de cámara al navegador</li>
+      <li>Asegúrate de estar en HTTPS (bautistaj.dev)</li>
+      <li>Cierra otras apps que usen la cámara</li>
+    </ul>
+    <button id="btn-retry" class="btn btn-sm" style="margin-bottom:8px">↺ Reintentar</button>
+    <a href="/ar/" class="btn btn-sm">← Galería</a>
   </div>
 
   <!-- ── FALLBACK (desktop / sin cámara) ────────────────── -->
@@ -351,6 +358,8 @@
 
       show('screen-cta');
     });
+
+    $('btn-retry').addEventListener('click', () => location.reload());
 
     $('btn-cta-close').addEventListener('click', () => hide('screen-cta'));
 
